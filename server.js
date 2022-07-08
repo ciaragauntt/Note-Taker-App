@@ -4,6 +4,13 @@ const path = require('path');
 const app = express();
 const PORT = 3001;
 
+const noteData = require('./db/db.json')
+const router = require('express').Router();
+
+//setting up data parsing 
+app.use(express.urlencoded({extended: true}));
+app.use(express.json());
+
 //connecting the html files 
 app.use(express.static('public'));
 
