@@ -6,7 +6,7 @@ const fs = require("fs");
 const app = express();
 const PORT = 3001;
 
-const noteData = require('./Develop/db/db.json')
+const noteData = require('./db/db.json')
 const router = require('express').Router();
 
 //setting up data parsing 
@@ -17,38 +17,38 @@ app.use(express.json());
 app.use(express.static('public'));
 
 app.get('/', (req, res) => 
-    res.sendFile(path.join(__dirname, '/public/index.html'))
+    res.sendFile(path.join(__dirname, './public/index.html'))
     );
 
 app.get('/notes', (req, res) =>
-    res.sendFile(path.join(__dirname, '/public/notes.html'))
+    res.sendFile(path.join(__dirname, './public/notes.html'))
     );
 
 // api route
 
 app.get('/api/notes', (req, res) => {
-    res.sendFile(path.join(__dirname, "./Develop/db/db.json"));
+    res.sendFile(path.join(__dirname, "./db/db.json"));
 });
 
 app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "/public/index.html"));
+    res.sendFile(path.join(__dirname, "./public/index.html"));
   });
   
 
 app.post("/api/notes", function (req, res) {
-    let notesSaved = JSON.parse(fs.readFileSync("./Develop/db/db.json", "utf8"));
+    let notesSaved = JSON.parse(fs.readFileSync("./db/db.json", "utf8"));
     let note = req.body;
     let uniqueID = notesSaved.length.toString();
     note.id = uniqueID;
     notesSaved.push(note);
   
-    fs.writeFileSync("./Develop/db/db.json", JSON.stringify(notesSaved));
+    fs.writeFileSync("./db/db.json", JSON.stringify(notesSaved));
    
     res.json(notesSaved);
   });
   
 app.delete("/api/notes/:id", function (req, res) {
-    let notes = JSON.parse(fs.readFileSync("./Develop/db/db.json", "utf8"));
+    let notes = JSON.parse(fs.readFileSync("./db/db.json", "utf8"));
     let id = req.params.id;
     let newID = 0;
     
@@ -60,7 +60,7 @@ app.delete("/api/notes/:id", function (req, res) {
       note.id = newID.toString();
       newID++;
     }
-  fs.writeFileSync("./Develop/db/db.json", JSON.stringify(notes));
+  fs.writeFileSync("./db/db.json", JSON.stringify(notes));
     res.json(notes);
   });
   
