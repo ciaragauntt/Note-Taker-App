@@ -14,7 +14,7 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 
 //connecting the html files 
-app.use(express.static('./public'));
+app.use(express.static('root'));
 
 app.get('/', (req, res) => 
     res.sendFile(path.join(__dirname, './public/index.html'))
